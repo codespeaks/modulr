@@ -143,7 +143,8 @@ var modulr = (function(global) {
       // Build a dependency graph so we can handle subsequent 
       // require.define calls easily.
       _forEach(descriptors, function(id, factory) {
-        var key = PREFIX + id;
+        var identifier = resolveIdentifier(id);
+        var key = PREFIX + identifier;
         _dependencyGraph[key] = missingDependencies; // TODO clone?
         _incompleteFactories[key] = factory;
       });
@@ -164,7 +165,8 @@ var modulr = (function(global) {
     // Handles factories for which all dependencies are
     // available.
     _forEach(descriptors, function(id, factory) {
-      var key = PREFIX + id;
+      var identifier = resolveIdentifier(id);
+      var key = PREFIX + identifier;
       // Move the factory from the list of factories missing
       // dependencies to the list of synchronously requirable
       // factories.
@@ -217,10 +219,11 @@ var modulr = (function(global) {
         var id = dependencies[j];
         // If any dependency is missing, the handler isn't ready to be called.
         // Store those missing so we can later inform the loader.
-        if (!_factories[PREFIX + id]) {
+        var identifier = resolveIdentifier(id);
+        if (!_factories[PREFIX + identifier]) {
           missingFactories = missingFactories || [];
-          if (_indexOf(missingFactories, id) < 0) {
-            missingFactories.push(id);
+          if (_indexOf(missingFactories, identifier) < 0) {
+            missingFactories.push(identifier);
           }
           isRipe = false;
         }
