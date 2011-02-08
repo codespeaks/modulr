@@ -68,6 +68,7 @@ var require = (function() {
           fn = new Function('require', 'exports', 'module', fn);
         }
         if (!require.main) { require.main = mod; }
+        mod.exports = expts;
         fn(require, expts, mod);
         _dirStack.pop();
       } catch(e) {
@@ -76,7 +77,7 @@ var require = (function() {
         throw e;
       }
     }
-    return expts;
+    return mod.exports;
   }
   
   function resolveIdentifier(identifier) {

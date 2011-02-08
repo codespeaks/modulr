@@ -86,6 +86,7 @@ var modulr = (function(global) {
         if (typeof fn === 'string') {
           fn = new Function('require', 'exports', 'module', fn);
         }
+        mod.exports = expts;
         fn(require, expts, mod);
         _dirStack.pop();
       } catch(e) {
@@ -94,7 +95,7 @@ var modulr = (function(global) {
         throw e;
       }
     }
-    return expts;
+    return mod.exports;
   }
   
   function resolveIdentifier(identifier) {
