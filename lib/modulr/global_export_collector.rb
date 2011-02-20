@@ -37,10 +37,10 @@ module Modulr
         if use_module_id_as_var_name?
           top_level_modules.map { |m| "\n  #{m.id} = require('#{m.id}');" }.join
         elsif top_level_modules.size == 1
-          #export to named global
+          # Export to named global
           "\n  #{global_var_name} = require('#{top_level_modules.first.id}');"
         else
-          #export to props of named global
+          # Export to props of named global
           top_level_modules.inject("\n#{global_var_name} = {};") do |str, m|
             str << "\n  #{global_var_name}.#{m.id} = require('#{m.id}');"
           end

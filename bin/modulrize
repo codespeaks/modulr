@@ -39,8 +39,12 @@ opts = OptionParser.new do |opts|
     options[:main_module] = main_module
   end
   
-  opts.on('--sync', 'Load all dependencies synchronously.') do |global|
+  opts.on('--sync', 'Load all dependencies synchronously.') do |sync|
     options[:sync] = true
+  end
+  
+  opts.on('--add-lib', 'Add modulr.js lib if you are not using another package loader.') do |add_lib|
+    options[:add_lib] = true
   end
   
   opts.on('--dependency-graph[=OUTPUT]', 'Create a dependency graph of the module.') do |output|
