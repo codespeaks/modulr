@@ -43,8 +43,8 @@ opts = OptionParser.new do |opts|
     options[:sync] = true
   end
   
-  opts.on('--add-lib', 'Add modulr.js lib if you are not using another package loader.') do |add_lib|
-    options[:add_lib] = true
+  opts.on('--custom-loader', 'Do not add modulr.js to the output. Use if you are using a different package loader, like Yabble.') do |custom_loader|
+    options[:custom_loader] = true
   end
   
   opts.on('--dependency-graph[=OUTPUT]', 'Create a dependency graph of the module.') do |output|
