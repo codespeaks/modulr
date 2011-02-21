@@ -13,7 +13,7 @@ module Modulr
     
     def minify(input)
       require "yui/compressor"
-      compressor = YUI::JavaScriptCompressor.new
+      compressor = YUI::JavaScriptCompressor.new(@options)
       compressor.compress(input)
     end
   end
