@@ -51,9 +51,9 @@ begin
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "modulr"
     gemspec.summary = "A CommonJS module implementation in Ruby for client-side JavaScript"
-    gemspec.author = "Tobie Langel, updates by Alex MacCaw"
-    gemspec.email = "info@eribium.org"
-    gemspec.homepage = "http://github.com/maccman/modulr"
+    gemspec.author = "Tobie Langel"
+    gemspec.email = "tobie.langel@gmail.com"
+    gemspec.homepage = "http://github.com/codespeaks/modulr"
     gemspec.files = FileList["Rakefile", "README.markdown", "LICENSE", "VERSION", "{lib,bin,assets,example}/**/*", "vendor/rkelly/**/*"]
     gemspec.executable = "modulrize"
     gemspec.add_dependency("yui-compressor", "~> 0.9.3")
