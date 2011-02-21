@@ -59,26 +59,21 @@ opts = OptionParser.new do |opts|
 
   opts.separator ''  	
   opts.separator 'Minification options (these are forwarded to YUI Compressor without the "minify-" prefix):'
-
-  {
-    '[no-]munge'                 => 'Minify only, do not obfuscate.',
-    '[no-]preserve-semicolons'   => 'Preserve all semicolons.',
-    '[no-]optimize'              => 'Use micro optimizations.'
-  }.each do |option, message|
-    prefixed_option = option.sub(/\A(\[no-\])?/, '--\\1minify-')  
-
-    def normalize_option(option)
-      option.gsub('-', '_').to_sym
-    end
-
-    opts.on(prefixed_option, message) do |value|
-      if !options[:minify] || options[:minify] == true
-        options[:minify] = {}
-      end
-      options[:minify][normalize_option(option)] = value
-    end
+  
+  opts.on('--minify-disable-optimizations', 'Disable all micro optimizations.') do |value|
+    options[:minify] = {} unless options[:minify].is_a?(Hash)
+    options[:minify][:optimize] = false
   end
-
+  
+  opts.on('--minify-munge', 'Minify only, do not obfuscate.') do |value|
+    options[:minify] = {} unless options[:minify].is_a?(Hash)
+    options[:minify][:munge] = false
+  end
+  
+  opts.on('--minify-preserve-semicolons', 'Preserve all semicolons.') do |value|
+    options[:minify] = {} unless options[:minify].is_a?(Hash)
+    options[:minify][:preserve_semicolons] = true
+  end
 end
 
 opts.parse!
