@@ -3,17 +3,18 @@ module Modulr
     attr_reader :modules, :top_level_modules
     
     def initialize(options = {})
-      @options = options
-      @root = options[:root]
-      @lazy_eval = options[:lazy_eval]
-      @modules = []
+      @options       = options
+      @root          = options[:root]
+      @lazy_eval     = options[:lazy_eval]
+      @custom_loader = options[:custom_loader]
+      @modules       = []
       @top_level_modules = []
     end
     
     def to_js(buffer = '')
       buffer << globals
       buffer << "\n(function() {"
-      buffer << lib
+      buffer << lib unless @custom_loader
       buffer << transport
       reorder_top_level_modules
       buffer << requires
