@@ -39,8 +39,12 @@ opts = OptionParser.new do |opts|
     options[:main_module] = main_module
   end
   
-  opts.on('--sync', 'Load all dependencies synchronously.') do |global|
+  opts.on('--sync', 'Load all dependencies synchronously.') do |sync|
     options[:sync] = true
+  end
+  
+  opts.on('--custom-loader', 'Do not add modulr.js to the output. Use if you are using a different package loader, like Yabble.') do |custom_loader|
+    options[:custom_loader] = true
   end
   
   opts.on('--dependency-graph[=OUTPUT]', 'Create a dependency graph of the module.') do |output|
@@ -52,31 +56,24 @@ opts = OptionParser.new do |opts|
     puts opts
     exit
   end
-  
-  opts.separator ''
+
+  opts.separator ''  	
   opts.separator 'Minification options (these are forwarded to YUI Compressor without the "minify-" prefix):'
   
-  {
-    'line-break COLUMN'     => 'Insert a line break after the specified column number.',
-    'verbose'               => 'Display informational messages and warnings.',
-    'nomunge'               => 'Minify only, do not obfuscate.',
-    'preserve-semi'         => 'Preserve all semicolons.',
-    'disable-optimizations' => 'Disable all micro optimizations.'
-  }.each do |option, message|
-    prefixed_option = option.sub(/\A(\[no-\])?/, '--\\1minify-')
-    
-    def normalize_option(option)
-      option.gsub('-', '_').to_sym
-    end
-    
-    opts.on(prefixed_option, message) do |value|
-      if !options[:minify] || options[:minify] == true
-        options[:minify] = {}
-      end
-      options[:minify][normalize_option(option)] = value
-    end
+  opts.on('--minify-disable-optimizations', 'Disable all micro optimizations.') do |value|
+    options[:minify] = {} unless options[:minify].is_a?(Hash)
+    options[:minify][:optimize] = false
   end
-
+  
+  opts.on('--minify-munge', 'Minify only, do not obfuscate.') do |value|
+    options[:minify] = {} unless options[:minify].is_a?(Hash)
+    options[:minify][:munge] = false
+  end
+  
+  opts.on('--minify-preserve-semicolons', 'Preserve all semicolons.') do |value|
+    options[:minify] = {} unless options[:minify].is_a?(Hash)
+    options[:minify][:preserve_semicolons] = true
+  end
 end
 
 opts.parse!

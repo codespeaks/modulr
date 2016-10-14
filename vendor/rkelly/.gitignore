@@ -1,3 +1,4 @@
-/lib/rkelly/generated_parser.rb
+# Actually commit the parser, to get Gemfiles working
+# /lib/rkelly/generated_parser.rb
 .*.swp
 tags

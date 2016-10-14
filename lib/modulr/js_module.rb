@@ -105,7 +105,7 @@ module Modulr
     end
     
     def ensure(buffer = '')
-      fn = "function() {\n#{src}\n}"
+      fn = "function(require) {\n#{src}\n}"
       buffer << "\nrequire.ensure(#{dependency_array}, #{fn});\n"
     end
 
